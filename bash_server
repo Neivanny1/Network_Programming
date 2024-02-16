@@ -1,0 +1,15 @@
+#!/bin/bash
+echo 'Obtaining server ip'
+# gets the current ipv4 address
+ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | awk '{print $2}' | grep -v '127.0.0.1' | head -n 1)
+sleep 3
+echo 'Starting up the server'
+sleep 3
+
+echo 'Redirecting to browser'
+sleep  3
+domain='http://'$ip':7000'
+# opens browser with pointed domain
+xdg-open $domain
+# starts python server
+python3 -m http.server 7000 --bind $ip
